@@ -7,47 +7,26 @@ using namespace std;
 ///                  Comilla University , Bangladesh.                                       ///
 ///...................................*****.................................................///
 
+bool mark[1000005];
+ll nPrime;
+vector<ll>allPrimeUp2N;
 
-vector<int>v;
-
-void findPrime(int n)
+void sieve(ll x)
 {
-    bool prime[n];
-    memset(prime,false,sizeof prime);
+    ll i,j;
+    mark[1] = 1;
+    for(ll i =4;i<=x;i=i+2)
+        mark[i]=1;
 
-    for(int i=4; i<=n; i+=2)
+    for(i=3;i*i<=x;i+=2)
     {
-        prime[i]=true;
-    }
-
-    prime[1]=true;
-
-    for(int i=3; i*i<=n; i+=2)
-    {
-        if(!prime[i])
-        {
-            for(int j=2; i*j<=n; j++)
-            {
-                prime[i*j]=true;
-            }
+        if(!mark[i]){
+            for(j=i*i;j<=x;j+=2*i)
+                mark[j]=1;
         }
     }
-
-    for(int i=1; i<=n; i++)
-    {
-        if(!prime[i])
-        {
-            v.push_back(i);
-        }
+    for(i=1;i<=x;i++){
+        if(mark[i]==0)allPrimeUp2N.pb(i);
     }
-}
-int main()
-{
-    int n;
-    cin>>n;
-    findPrime(n);
-    for(int i=0; i<v.size(); i++)
-    {
-        cout<<v[i]<<" ";
-    }
+    nPrime = allPrimeUp2N.size();
 }
