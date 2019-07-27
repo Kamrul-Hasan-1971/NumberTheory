@@ -7,9 +7,11 @@ using namespace std;
 ///                  Comilla University , Bangladesh.                                       ///
 ///...................................*****.................................................///
 
-bool mark[1000005];
-ll nPrime;
-vector<ll>allPrimeUp2N;
+#define           ll               long long int
+#define           pb               push_back
+
+bool mark[10000005];
+vector<ll>prime;
 
 void sieve(ll x)
 {
@@ -25,8 +27,8 @@ void sieve(ll x)
                 mark[j]=1;
         }
     }
-    for(i=1;i<=x;i++){
-        if(mark[i]==0)allPrimeUp2N.pb(i);
+    prime.pb(2);
+    for(i=3;i<=x;i+=2){
+        if(mark[i]==0)prime.pb(i);
     }
-    nPrime = allPrimeUp2N.size();
 }
