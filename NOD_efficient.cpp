@@ -4,34 +4,26 @@ using namespace std;
 #define           pb               push_back
 
 
-vector<ll>v;
-bool prime[2000006];
+bool mark[10000005];
+vector<ll>prime;
 
-void findPrime(ll n)
+void sieve(ll x)
 {
-    for(ll i=4; i<=n; i+=2)
-    {
-        prime[i]=true;
-    }
+    ll i,j;
+    mark[1] = 1;
+    for(ll i =4;i<=x;i=i+2)
+        mark[i]=1;
 
-
-    for(ll i=3; i*i<=n; i+=2)
+    for(i=3;i*i<=x;i+=2)
     {
-        if(!prime[i])
-        {
-            for(ll j=2; i*j<=n; j++)
-            {
-                prime[i*j]=true;
-            }
+        if(!mark[i]){
+            for(j=i*i;j<=x;j+=2*i)
+                mark[j]=1;
         }
     }
-
-    for(ll i=2; i<=n; i++)
-    {
-        if(!prime[i])
-        {
-            v.push_back(i);
-        }
+    prime.pb(2);
+    for(i=3;i<=x;i+=2){
+        if(mark[i]==0)prime.pb(i);
     }
 }
 
@@ -39,9 +31,9 @@ int NOD(ll a)
 {
     ll cnt,x=1,n;
 
-    for(ll i =0; v[i]*v[i]<=a; i++)
+    for(ll i =0; prime[i]*prime[i]<=a; i++)
     {
-        n=v[i];
+        n=prime[i];
         cnt=1;
         while(a%n==0)
         {
@@ -64,7 +56,7 @@ int main()
 
     ll a,n;
     n=2000002;
-    findPrime(n);
+    sieve(n);
     cin>>a;
     cout<<NOD(a);
 }
