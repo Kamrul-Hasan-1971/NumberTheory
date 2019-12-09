@@ -1,87 +1,45 @@
-#include<bits/stdc++.h>
-using namespace std;
+bool mark[50005];
+vector<ll>prime;
 
-///...................................*****.................................................///
-///                  Kamrul Hasan ( icthasan36@gmail.com )                                  ///
-///                  Department of Ict                                                      ///
-///                  Comilla University , Bangladesh.                                       ///
-///...................................*****.................................................///
-#define           ll               long long int
-
-vector<int>v;
-bool prime[10000003];
-
-void findPrime(int n)
+void sieve(ll x)
 {
-    for(int i=4; i<=n; i+=2)
-    {
-        prime[i]=true;
-    }
+    ll i,j;
+    mark[1] = 1;
+    for(ll i =4; i<=x; i=i+2)
+        mark[i]=1;
 
-    prime[1]=true;
-
-    for(int i=3; i*i<=n; i+=2)
+    for(i=3; i*i<=x; i+=2)
     {
-        if(!prime[i])
+        if(!mark[i])
         {
-            for(int j=2; i*j<=n; j++)
-            {
-                prime[i*j]=true;
-            }
+            for(j=i*i; j<=x; j+=2*i)
+                mark[j]=1;
         }
     }
-
-    for(int i=1; i<=n; i++)
+    prime.pb(2);
+    for(i=3; i<=x; i+=2)
     {
-        if(!prime[i])
-        {
-            v.push_back(i);
-        }
+        if(mark[i]==0)
+            prime.pb(i);
     }
 }
-int main()
+
+ll prime_fact( ll n )
 {
-    int n,a,b,i;
-    n=10000001;
-    findPrime(n);
-    while(scanf("%lld",&a)!=EOF)
+    for( int i = 0 ; prime[i]*prime[i] <= n ; i++ )
     {
-        if(a==1)
+        if( n % prime[i] == 0 )
         {
-            printf("1\n");
-            continue;
-        }
-        if(prime[a]==0)
-        {
-            printf("1 x %d\n",a);
-            continue;
-        }
-        printf("1");
-        for(i=0;; i++)
-        {
-            if(a%v[i]==0)
+            v1.pb(prime[i]);
+            
+            while( n % prime[i] == 0 )
             {
-                while(1)
-                {
-                    if(a%v[i]!=0)
-                    {
-                        break;
-                    }
-                    printf(" x %d",v[i]);
-                    a=a/v[i];
-                }
-            }
-            if(a==1){
-                printf("\n");
-                break;
-            }
-            if(prime[a]==0)
-            {
-                printf(" x %d\n",a);
-                break;
+                n = n / prime[i] ;
             }
         }
     }
-
+    if( n > 1 )
+    {
+        v1.pb( n ) ;
+    }
 }
-
