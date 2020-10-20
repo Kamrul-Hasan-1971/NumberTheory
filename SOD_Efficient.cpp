@@ -1,74 +1,59 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-#define           CIN              ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
-#define           ll               long long int
-#define           pii              pair < string, ll>
-#define           pb               push_back
+#define  CIN            ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0)
+#define  ll             long long int
 
+bool mark[100000005];
+vector<ll>prime;
 
-vector<ll>v,v1;
-bool prime[10000004];
-
-void findPrime(int n)
+void sieve(ll x)
 {
-    for(int i=4; i<=n; i+=2)
-    {
-        prime[i]=true;
-    }
+    ll i,j;
+    mark[1] = 1;
+    for(ll i =4;i<=x;i=i+2)
+        mark[i]=1;
 
-
-    for(int i=3; i*i<=n; i+=2)
+    for(i=3;i*i<=x;i+=2)
     {
-        if(!prime[i])
-        {
-            for(int j=2; i*j<=n; j++)
-            {
-                prime[i*j]=true;
-            }
+        if(!mark[i]){
+            for(j=i*i;j<=x;j+=2*i)
+                mark[j]=1;
         }
     }
-
-    for(ll i=2; i<=n; i++)
-    {
-        if(!prime[i])
-        {
-            v.push_back(i);
-        }
+    prime.push_back(2);
+    for(i=3;i<=x;i+=2){
+        if(mark[i]==0)prime.push_back(i);
     }
 }
-
 
 ll SOD(ll a)
 {
-    ll cnt,x=1,n;
-
-    for(int i =0; v[i]*v[i]<=a; i++)
+    ll sod=1;
+    for(int i =0; i<prime.size() && prime[i]*prime[i]<=a; i++)
     {
-        n=v[i];
-        cnt=1;
-        while(a%n==0)
+        ll pw=prime[i];
+        while(a%prime[i]==0)
         {
-            cnt++;
-            a=a/n;
+            a/=prime[i];
+            pw*=prime[i];
         }
-        x=x*(((pow(v[i],cnt))-1)/(v[i]-1));
+        sod*=((pw-1)/(prime[i]-1));
     }
-    if(a!=1)
-    {
-        x=x*(((a*a)-1)/(a-1));
-    }
-    return x;
+    if(a!=1) sod*=(((a*a)-1)/(a-1));
+    return sod;
 }
-
-
-
 
 int main()
 {
-    ll a,b=10000000,i,j,c,d,test;
-    findPrime(b);
-    scanf("%lld", &a);
-    printf("%lld\n",SOD(a));
-    return 0;
+    CIN;
+    sieve(100000);
+    ll T,a;
+    cin >> T ;
+    while(T--){
+        cin >> a;
+        cout<<SOD(a)<<endl;
+    }
+    return 0 ;
 }
+
