@@ -27,36 +27,31 @@ void sieve(ll x)
     }
 }
 
-int NOD(ll a)
+ll NOD(ll a)
 {
-    ll cnt,x=1,n;
-
+    ll cnt,x=1;
     for(ll i =0; prime[i]*prime[i]<=a; i++)
     {
-        n=prime[i];
+
         cnt=1;
-        while(a%n==0)
+        while(a%prime[i]==0)
         {
             cnt++;
-            a=a/n;
+            a=a/prime[i];
         }
         x=x*cnt;
     }
-    if(a!=1)
-    {
-        x=x*2;
-    }
+    if(a!=1) x=x*2;
     return x;
 }
-
-
 
 int main()
 {
 
-    ll a,n;
-    n=2000002;
-    sieve(n);
+    ll a,T=100;
+    sieve(10000);
+    while(T--){
     cin>>a;
     cout<<NOD(a);
+    }
 }
