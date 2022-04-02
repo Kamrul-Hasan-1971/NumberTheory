@@ -1,7 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define pii pair<long long int,long long int>
+
 #define ll long long int
+#define pii pair<ll,ll>
+
 
 vector<long long int>prime;
 vector<pii>v;
