@@ -25,12 +25,8 @@ void siveve(int N)
 void factFactorization(int r)
 {
     for(int i=0;i<prime.size();i++){
-        int s=r,num=0;
-        while(1){
-            s /= prime[i];
-            num += s;
-            if(s==0) break;
-        }
+        int s = r, num=0;
+        while(s /= prime[i]) num += s;
         v.push_back({prime[i],num});
     }
 }
